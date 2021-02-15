@@ -7,7 +7,7 @@ library(tidyverse)
 library(stringr)
 
 #import the data (eventually replace w/ Zenodo URL)
-CHIIPdata <- read_csv("ReleaseData2.csv")
+CHIIPdata <- read_csv("ReleaseData_v2.csv")
 
 ###### Split and Pivot the data into individual dataframes
 
