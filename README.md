@@ -1,4 +1,4 @@
-## IRR Analysis of NOAA Post Storm Images
+## IRR analysis of labeled post-storm images from NOAA
 
 There are 4 scripts here to use on the 2nd version of release data:
 
