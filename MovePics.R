@@ -8,17 +8,20 @@
 library(tidyverse)
 library(stringr)
 
-#load the pivotd data
+#load the pivoted data
 all_pivot_count <- read_csv("all_pivot_count.csv")
 
+#remove the first column
+all_pivot_count <- all_pivot_count %>%
+  select(-c(X1))
 
 ########
 #Move images to folders based on counts for both washover deposit and overwash votes.
 #this is for manual, visual inspection..
 
 # Isolate experiment 1, washtype, and overwash
-Exp123 <- all_pivot_count %>%
-  filter(experimentCount < 4) %>%
+Exp1 <- all_pivot_count %>%
+  filter(experimentCount == 1) %>%
   filter(question == "overwash" | question == "washType") %>%
   select("NOAA_flight":"7") %>%
   mutate(`1` = as.numeric(`1`),`2` = as.numeric(`2`),`3` = as.numeric(`3`),
@@ -26,7 +29,7 @@ Exp123 <- all_pivot_count %>%
          `7` = as.numeric(`7`))
 
 #Counts for each
-Exp123$OWcount <- rowSums(Exp1[,4:10])
+Exp1$OWcount <- rowSums(Exp1[,4:10])
 
 #MAKE FOLDERS
 #washovr deposit
@@ -62,14 +65,14 @@ psi_loc = "/Volumes/Passport/IRRpics/"
 
 #Add correct directories as a column to the dataframe
 #add destination directory and source directory and file
-Exp123dest <- Exp123 %>%
+Exp1dest <- Exp1 %>%
   mutate(dest =  str_c(question,"/", as.character(OWcount))) %>%
   mutate_all(~gsub("Florence_|Isaias_|Michael_", "", .)) %>% #remove the storm name from flight directory name
   mutate(src =  str_c(psi_loc, NOAA_flight,"/jpgs/", as.character(image))) 
 
 
-filelist <- Exp123dest$src
-destlist <- file.path(Exp123dest$dest, Exp123dest$image)
+filelist <- Exp1dest$src
+destlist <- file.path(Exp1dest$dest, Exp1dest$image)
 
 #MOVE IMAGES
 #cycle through dataframe and move files
