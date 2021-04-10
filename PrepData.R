@@ -6,7 +6,7 @@ library(tidyverse)
 library(stringr)
 
 #import the data (eventually replace w/ Zenodo URL)
-data <- read_csv("data/ReleaseData_v2.csv")
+data <- read_csv("data/ReleaseData3.csv")
 
 ###### Split and Pivot the data into individual dataframes
 
@@ -95,26 +95,14 @@ all_pivot <- rbind(development,
                    water, sandy, river, marsh, inland)
 
 #Add in the experiment number
+
 experimentCount <- rep(
-  c(rep(c(1),times=300),
-    rep(c(5),times=100),
-    rep(c(2),times=100),
-    rep(c(3),times=100),
-    rep(c(4),times=100),
-    rep(c(3),times=100),
-    rep(c(5),times=100)), times = 13)
+  c(rep(c(1),times=900), 
+    rep(c(2),times=600)),times = 13)
 
-
-#Rows 100-300; cols 1-7; 7 people, Exp 1
-#Rows 301-400; cols 1,13; 2 people Exp 5
-#Rows 401-500;cols 1, 8-12; 5 people, Exp 2
-#Rows 501-600;cols 1, 8-10,12; 4 people Exp 3
-#Rows 601-700;cols 1,5,6; 3 people Exp 4
-#Rows 701-800;cols 1, 8-10,12; 4 people Exp 3
-#Rows 801-900; cols 1,13; 2 people Exp 5
 
 #concatenate the data and the experiment count
 all_pivot_count <- cbind(all_pivot,experimentCount)
 
 #save the dataframe
-write.csv(all_pivot_count,'all_pivot_count.csv')
+write.csv(all_pivot_count,'all_pivot_count_v3.csv')

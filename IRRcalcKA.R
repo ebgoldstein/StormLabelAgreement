@@ -7,11 +7,23 @@ library(tidyverse)
 library(stringr)
 
 #load the pivoted data
-all_pivot_count <- read_csv("all_pivot_count.csv")
+#all_pivot_count <- read_csv("all_pivot_count_v3test.csv")
+
+all_pivot_count <- read_csv("all_pivot_count_v3.csv", 
+                                   col_types = cols(`14` = col_double(), 
+                                                    `15` = col_double(), 
+                                                    `16` = col_double(), 
+                                                    `18` = col_double(), 
+                                                    `19` = col_double(),
+                                                    `20` = col_double()))
+
 
 #remove the first column
 all_pivot_count <- all_pivot_count %>%
-  select(-c(X1))
+  select(-c(X1)) 
+
+all_pivot_count <- all_pivot_count %>%
+  filter(experimentCount == 2)
 
 ####### IRR calculation
 
@@ -33,7 +45,7 @@ for ( i in seq(from=1, to=(nrow(all_pivot_count)-99), by=All_Images))
   IRR_results[j,1] <- working_subset[1, 3]
   
   subsetDF <- working_subset %>%
-    select("1":"13") 
+    select("1":"20") 
   
   subsetMat <- data.matrix(subsetDF)
   
@@ -48,7 +60,4 @@ for ( i in seq(from=1, to=(nrow(all_pivot_count)-99), by=All_Images))
 #table 1
 IRR_results
 
-
-
-
-
+#write.csv(IRR_results,'IRRresults_EXP2.csv')
