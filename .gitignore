@@ -2,3 +2,6 @@
 /data
 /subset
 /helpers
+
+.RData
+.Rhistory

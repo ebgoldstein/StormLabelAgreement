@@ -43,6 +43,28 @@ Exp1 <- cbind(Exp1All,FullyCrossed) %>%
 #Counts for each
 Exp1$VoteCount <- rowSums(Exp1[,4:10])
 
+#replace label name
+Exp1 <- Exp1 %>%
+  mutate(question = replace(question, question == "devType", "Buildings?")) %>%
+  mutate(question = replace(question, question == "allWater", "All Water?")) %>%
+  mutate(question = replace(question, question == "collision", "Collision?")) %>%
+  mutate(question = replace(question, question == "dmgType", "Damage?")) %>%
+  mutate(question = replace(question, question == "inland", "Inland?")) %>%
+  mutate(question = replace(question, question == "inundation", "Inundation?")) %>%
+  mutate(question = replace(question, question == "marsh", "Marsh?")) %>%
+  mutate(question = replace(question, question == "No_Impact", "No Impact?")) %>%
+  mutate(question = replace(question, question == "overwash", "Overwash?")) %>%
+  mutate(question = replace(question, question == "river", "River?")) %>%
+  mutate(question = replace(question, question == "sandyCoastline", "Sandy Coastline?")) %>%
+  mutate(question = replace(question, question == "swash", "Swash?"))  %>%
+  mutate(question = replace(question, question == "washType", "Washover?"))
+
+
+Exp1$question <- factor(Exp1$question, levels=c("Buildings?","Damage?","Washover?","No Impact?",
+                                                "Swash?","Collision?","Overwash?","Inundation?",
+                                                "Sandy Coastline?","Marsh?","Inland?","River?", "All Water?"))
+
+
 #Bar chart facet for all Qs
 ggplot(Exp1,
        aes(VoteCount)) + geom_bar() + facet_wrap(~question)
