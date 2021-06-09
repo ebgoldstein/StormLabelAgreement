@@ -89,6 +89,7 @@ PrepDataFn <- function(data_csv) {
   marsh <- SepPivotT(marsh, "marsh")
   inland <- SepPivotT(inland, "inland")
   river <- SepPivotT(river, "river")
+  estuary <- SepPivotT(river, "estuary")
   
   #stack all dataframes:
   all_pivot <- rbind(
@@ -104,7 +105,8 @@ PrepDataFn <- function(data_csv) {
     sandy,
     river,
     marsh,
-    inland
+    inland,
+    estuary
   )
   
   
@@ -121,7 +123,7 @@ all_pivot_exp12 <- PrepDataFn(data)
 
 experimentCount <- rep(
   c(rep(c(1),times=900), 
-    rep(c(2),times=600)),times = 13)
+    rep(c(2),times=600)),times = 14)
 
 
 #concatenate the data and the experiment count
