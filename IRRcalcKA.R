@@ -17,8 +17,8 @@ ImageIRR <- function(data,maxLabeler) {
   All_Images <- length(unique(unlist(data[c("image")])))
   
   #make a dataframe to hold the results
-  IRR_results <- data.frame(matrix(ncol = 2, nrow = (nrow(data)/All_Images)))
-  colnames(IRR_results) <- c("Question", "Krippendorf_alpha")
+  IRR_results <- data.frame(matrix(ncol = 3, nrow = (nrow(data)/All_Images)))
+  colnames(IRR_results) <- c("Question", "Krippendorf_alpha", "Percent Agreement")
   
   #Loop through data, each category at a time. Record the question, and calculcate IRR stat.
   #Then add output to a new table
@@ -40,6 +40,24 @@ ImageIRR <- function(data,maxLabeler) {
     Alphalist <- kripp.alpha(subsetMat)
     
     IRR_results[j,2] <- Alphalist$value
+    
+    ####
+    #get percent agreement. The NAs prevent irr::agree from working.
+    #first get non- NAs per row — which is the number of raters
+    raters <- rowSums(!is.na(subsetDF))
+
+    #calculate the total number of votes in each row
+    votes <- rowSums(subsetDF, na.rm=TRUE)
+    
+    #dataframe
+    ADF <- data_frame(raters,votes)
+    
+    #find where votes = 0 (agree no) and NAPR==TV ==  (agree yes)
+    agreeframe <- ADF %>% 
+      count(raters == votes | votes == 0)
+    
+    IRR_results[j,3] <- 100* (agreeframe[2,2] / nrow(subsetDF))
+    ####
     
   }
   
