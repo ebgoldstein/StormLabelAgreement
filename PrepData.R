@@ -132,7 +132,18 @@ all_pivot_exp12_count <- cbind(all_pivot_exp12,experimentCount)
 #save the dataframe
 write.csv(all_pivot_exp12_count,'data/all_pivot_count_exp12.csv')
 
-#call the fn for exp3 (Quads)
+
+#Subset for Exp 3
+
+subset <- read_csv("SubsetList.csv")
+
+Exp3Subset <- all_pivot_exp12_count %>%
+  filter(image %in% c(subset$image) )
+
+#save the dataframe
+write.csv(Exp3Subset,'data/all_pivot_count_subset.csv')
+
+#call the fn for exp3 Quads
 
 data <- read_csv("data/ReleaseDataQuads.csv")
 

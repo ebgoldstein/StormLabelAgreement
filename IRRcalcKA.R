@@ -102,7 +102,20 @@ Exp2data <- all_pivot_count %>%
 IRR_results2 <- ImageIRR(Exp2data,"20")
 write.csv(IRR_results2,'data/IRRresults_EXP2.csv')
 
-####EXP3
+####EXP3subset
+#load the pivoted quad data
+SubsetData <- read_csv("data/all_pivot_count_subset.csv")
+
+#remove the first column
+SubsetData <- SubsetData %>%
+  select(-c(X1)) 
+
+#run the fn for subset
+IRR_resultsSubset3 <- ImageIRR(SubsetData,"20")
+write.csv(IRR_resultsSubset3,'data/IRRresults_EXP3_subset.csv')
+
+
+####EXP3Q
 #load the pivoted quad data
 QuadData <- read_csv("data/all_pivot_count_quads.csv")
 
@@ -112,6 +125,6 @@ QuadData <- QuadData %>%
 
 #run the fn for Quads
 IRR_results3 <- ImageIRR(QuadData,"4")
-write.csv(IRR_results3,'data/IRRresults_EXP3.csv')
+write.csv(IRR_results3,'data/IRRresults_EXP3_quads.csv')
 
 
