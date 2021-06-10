@@ -17,8 +17,8 @@ ImageIRR <- function(data,maxLabeler) {
   All_Images <- length(unique(unlist(data[c("image")])))
   
   #make a dataframe to hold the results
-  IRR_results <- data.frame(matrix(ncol = 3, nrow = (nrow(data)/All_Images)))
-  colnames(IRR_results) <- c("Question", "Krippendorf_alpha", "Percent Agreement")
+  IRR_results <- data.frame(matrix(ncol = 4, nrow = (nrow(data)/All_Images)))
+  colnames(IRR_results) <- c("Question", "Krippendorf_alpha", "Percent Agreement", "Percent w/ atleast 1 Yes")
   
   #Loop through data, each category at a time. Record the question, and calculcate IRR stat.
   #Then add output to a new table
@@ -57,6 +57,14 @@ ImageIRR <- function(data,maxLabeler) {
       count(raters == votes | votes == 0)
     
     IRR_results[j,3] <- 100* (agreeframe[2,2] / nrow(subsetDF))
+    ####
+    
+    #Percent w/ 1 yes vote.
+    #find where votes > 0 (atleast 1 yes)
+    oneyesframe <- ADF %>% 
+      count(votes > 0)
+    
+    IRR_results[j,4] <- 100* (oneyesframe[2,2] / nrow(subsetDF))
     ####
     
   }
