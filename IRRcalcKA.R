@@ -135,4 +135,25 @@ QuadData <- QuadData %>%
 IRR_results3 <- ImageIRR(QuadData,"4")
 write.csv(IRR_results3,'data/IRRresults_EXP3_quads.csv')
 
+####################################
+#Plot the IRR Data as bar chart
 
+#Add Exp # 
+#Add in the experiment number and concatenate the data 
+#and the experiment number
+IRR_results1 <- cbind(IRR_results1,Exp =rep(c(1),times=14))
+IRR_results2 <- cbind(IRR_results2,Exp = rep(c(2),times=14))
+IRR_results3s <- cbind(IRR_resultsSubset3,Exp =rep(c('cs'),times=14))
+IRR_results3q <- cbind(IRR_results3,Exp = rep(c('cq'),times=14))
+
+
+IRR12 <- rbind(IRR_results1,IRR_results2)
+IRR34 <- rbind(IRR_results3s,IRR_results3q)
+IRRALL <- rbind(IRR_results1,IRR_results2,IRR_results3s,IRR_results3q)
+
+
+ggplot(data=IRR12, aes(x=Question,y=IRR12$`Percent Agreement`,fill=factor(Exp))) +
+  geom_bar(position="dodge",stat="identity") 
+
+ggplot(data=IRR12, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp))) +
+  geom_bar(position="dodge",stat="identity")
