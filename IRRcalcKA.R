@@ -1,10 +1,11 @@
 #Coastal NOAA post-storm IRR analysis
-#EBG started 2/2021; revised through 5/2012
+#EBG started 2/2021; revised through 6/2021
 
 #get the libraries
 library(irr)
 library(tidyverse)
 library(stringr)
+library(gridExtra)
 
 
 
@@ -146,14 +147,93 @@ IRR_results2 <- cbind(IRR_results2,Exp = rep(c(2),times=14))
 IRR_results3s <- cbind(IRR_resultsSubset3,Exp =rep(c('cs'),times=14))
 IRR_results3q <- cbind(IRR_results3,Exp = rep(c('cq'),times=14))
 
+###CLEAN THE DATA UP A BIT:
+#add the missing categories... exp 3s did not have pics from these categories.
+IRR_results3s[12,1] <- 'marsh'
+IRR_results3s[13,1] <- 'estuary'
+IRR_results3s[14,1] <- 'inland'
 
+#there was no estuary category in Exp 1, but that means the IRR score is 1...not correct.
+IRR_results1[14,2] <- NA
+
+# no rivers in Exp3s and 3q, so instead of KA ==1, they should be NA
+IRR_results3s[11,2] <- NA
+IRR_results3q[11,2] <- NA
+
+# combine the experiments into groups.
 IRR12 <- rbind(IRR_results1,IRR_results2)
 IRR34 <- rbind(IRR_results3s,IRR_results3q)
-IRRALL <- rbind(IRR_results1,IRR_results2,IRR_results3s,IRR_results3q)
 
 
-ggplot(data=IRR12, aes(x=Question,y=IRR12$`Percent Agreement`,fill=factor(Exp))) +
-  geom_bar(position="dodge",stat="identity") 
+# Add the correct labels to the quesitons
+IRR12 <- IRR12 %>%
+  mutate(Question = replace(Question, Question == 'washType', 'Washover?')) %>%
+  mutate(Question = replace(Question, Question == 'sandyCoastline', 'Sandy Coastline?')) %>%
+  mutate(Question = replace(Question, Question == 'dmgType', 'Damage?')) %>%
+  mutate(Question = replace(Question, Question == 'swash', 'Swash?')) %>%
+  mutate(Question = replace(Question, Question == 'collision', 'Collision?')) %>%
+  mutate(Question = replace(Question, Question == 'overwash', 'Overwash?')) %>%
+  mutate(Question = replace(Question, Question == 'inundation', 'Inundation?')) %>%
+  mutate(Question = replace(Question, Question == 'No_Impact', 'No Impact?')) %>%
+  mutate(Question = replace(Question, Question == 'allWater', 'All Water?')) %>%
+  mutate(Question = replace(Question, Question == 'devType', 'Buidings?'))%>%
+  mutate(Question = replace(Question, Question == 'river', 'River?')) %>%
+  mutate(Question = replace(Question, Question == 'marsh', 'Marsh?')) %>%
+  mutate(Question = replace(Question, Question == 'inland', 'Inland?'))%>%
+  mutate(Question = replace(Question, Question == 'estuary', 'Estuary?')) 
 
-ggplot(data=IRR12, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp))) +
-  geom_bar(position="dodge",stat="identity")
+IRR34 <- IRR34 %>%
+  mutate(Question = replace(Question, Question == 'washType', 'Washover?')) %>%
+  mutate(Question = replace(Question, Question == 'sandyCoastline', 'Sandy Coastline?')) %>%
+  mutate(Question = replace(Question, Question == 'dmgType', 'Damage?')) %>%
+  mutate(Question = replace(Question, Question == 'swash', 'Swash?')) %>%
+  mutate(Question = replace(Question, Question == 'collision', 'Collision?')) %>%
+  mutate(Question = replace(Question, Question == 'overwash', 'Overwash?')) %>%
+  mutate(Question = replace(Question, Question == 'inundation', 'Inundation?')) %>%
+  mutate(Question = replace(Question, Question == 'No_Impact', 'No Impact?')) %>%
+  mutate(Question = replace(Question, Question == 'allWater', 'All Water?')) %>%
+  mutate(Question = replace(Question, Question == 'devType', 'Buidings?'))%>%
+  mutate(Question = replace(Question, Question == 'river', 'River?')) %>%
+  mutate(Question = replace(Question, Question == 'marsh', 'Marsh?')) %>%
+  mutate(Question = replace(Question, Question == 'inland', 'Inland?'))%>%
+  mutate(Question = replace(Question, Question == 'estuary', 'Estuary?')) 
+
+# set the Q order via levels.
+irrLVLS <- c('Buidings?', 'Damage?', 'Washover?', 'No Impact?', 
+             'Swash?', 'Collision?', 'Overwash?', 'Inundation?', 
+             'All Water?', 'Sandy Coastline?', 'Marsh?', 'River?',
+             'Estuary?', 'Inland?')
+
+IRR12$Question <- factor(IRR12$Question,levels = rev(irrLVLS))
+IRR34$Question <- factor(IRR34$Question,levels = rev(irrLVLS))
+
+
+#Plot % agree and Krippendorf Alpha for  Exp1 and Exp2
+P1 <- ggplot(data=IRR12, aes(x=Question,y=IRR12$`Percent Agreement`,fill=factor(Exp, levels = c(2,1)))) +
+  geom_bar(position="dodge",stat="identity") +
+  labs(y="Percent Agreement",fill = "Experiment") + 
+  coord_flip()
+
+P2 <- ggplot(data=IRR12, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp, levels = c(2,1)))) +
+  geom_bar(position="dodge",stat="identity") +
+  labs(y="Krippendorf's Alpha",fill = "Experiment") + 
+  coord_flip()
+
+grid.arrange(P1, P2, nrow = 1)
+
+#Plot % agree and Krippendorf Alpha for  Exp3 and Exp4
+P3 <- ggplot(data=IRR34, aes(x=Question,y=IRR34$`Percent Agreement`,fill=factor(Exp))) +
+  geom_bar(position="dodge",stat="identity") +
+  labs(y="Percent Agreement",fill = "Experiment") + 
+  coord_flip()
+
+P4 <- ggplot(data=IRR34, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp))) +
+  geom_bar(position="dodge",stat="identity") +
+  labs(y="Krippendorf's Alpha",fill = "Experiment") + 
+  coord_flip()
+
+grid.arrange(P3, P4, nrow = 1)
+
+
+
+
