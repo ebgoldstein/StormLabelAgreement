@@ -198,6 +198,13 @@ IRR34 <- IRR34 %>%
   mutate(Question = replace(Question, Question == 'inland', 'Inland?'))%>%
   mutate(Question = replace(Question, Question == 'estuary', 'Estuary?')) 
 
+
+IRR34$Exp <- as.character(IRR34$Exp)
+
+IRR34  <- IRR34 %>%
+  mutate(Exp = replace(Exp, Exp == 'cs', 'Subset')) %>%
+  mutate(Exp = replace(Exp, Exp == 'cq', 'Quadrants')) 
+
 # set the Q order via levels.
 irrLVLS <- c('Buidings?', 'Damage?', 'Washover?', 'No Impact?', 
              'Swash?', 'Collision?', 'Overwash?', 'Inundation?', 
@@ -206,6 +213,8 @@ irrLVLS <- c('Buidings?', 'Damage?', 'Washover?', 'No Impact?',
 
 IRR12$Question <- factor(IRR12$Question,levels = rev(irrLVLS))
 IRR34$Question <- factor(IRR34$Question,levels = rev(irrLVLS))
+
+IRR34$Exp <- factor(IRR34$Exp,levels = c('Subset', 'Quadrants'))
 
 
 #Plot % agree and Krippendorf Alpha for  Exp1 and Exp2
