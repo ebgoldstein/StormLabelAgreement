@@ -1,12 +1,12 @@
 ## Analysis of inter-rater agreement for labels of post-storm coastal images
 
-To learn more about the labeling process for earth and environmental science imagery images, we solicited multiple labels for aerial images of US coastal environments after three hurricanes ( Florence, Michael, Isaias). We ask a range of questions about storm impacts, and each image is labeled between two and seven times by a group of 22 coastal scientists. The multiple-choice questions vary between two and four possible answers, and some questions allow for multiple answers. The corpus of images are from the large repository of Emergency Response Imagery collected by the National Geodetic Survey Remote Sensing Division of the US National Oceanographic and Atmospheric Administration. From all the labels, we computed inter-rater reliability.
+We solicited multiple labels for aerial images of US coastal environments after three hurricanes ( Florence, Michael, Isaias) to learn more about the labeling process for earth and environmental science imagery images. We ask a range of questions about storm impacts, and each image is labeled between two and seven times by a group of 22 coastal scientists. The multiple-choice questions vary between two and four possible answers, and some questions allow for multiple answers. The corpus of images are from the large repository of Emergency Response Imagery collected by the National Geodetic Survey Remote Sensing Division of the US National Oceanographic and Atmospheric Administration. From all the labels, we computed inter-rater reliability.
 
-To use the scripts in this repository, please download the data from:
+To use the scripts in this repository requires data that is available from Zenodo:
 
  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4694325.svg)](https://doi.org/10.5281/zenodo.4694325)
 
-Please make a `/data` folder in this directory, and put the downloaded csvs in this folder.
+Note that the `Prepdata.R` script collects this data for you, and places it in a `/data` folder.
 
 There are 3 scripts here to use on the release data:
 

@@ -5,10 +5,34 @@
 library(tidyverse)
 library(stringr)
 
-#This script imports the data from the Zenodo release and reformats.
+#DATA RETRIEVAL
+
+#First check to see if data directory exists
+direxist <- dir.exists("data")
+
+if (direxist == TRUE) {
+  #If dir exists, check to see if files exist
+  RDV3 <- file.exists("data/ReleaseData_v3.csv")
+  RDQ <- file.exists("data/ReleaseDataQuads.csv")
+  if (RDV3 == FALSE){
+    #If its not there, get it 
+    download.file("https://zenodo.org/record/4967050/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
+  }
+  if (RDQ == FALSE) {
+    #If its not there, get it 
+    download.file("https://zenodo.org/record/4967050/files/ReleaseDataQuads.csv", "data//ReleaseDataQuads.csv")
+  } 
+  
+} else {
+  #If dir does not exist, make it and put the files in.
+  dir.create("data")
+  download.file("https://zenodo.org/record/4967050/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
+  download.file("https://zenodo.org/record/4967050/files/ReleaseDataQuads.csv", "data//ReleaseDataQuads.csv")
+}
 
 
-#First, define a fn to Separate and Pivot the impact, for each category, 
+#ANALYSIS
+#Now, define a fn to Separate and Pivot the impact, for each category, 
 #into their own dataframes
 
 SepPivotI <- function(key, value) {
@@ -115,7 +139,7 @@ PrepDataFn <- function(data_csv) {
 
 #call the fn for exp1 and 2
 #import the data (eventually replace w/ Zenodo URL)
-data <- read_csv("data/ReleaseData3.csv")
+data <- read_csv("data/ReleaseData_v3.csv")
 
 all_pivot_exp12 <- PrepDataFn(data)
 
