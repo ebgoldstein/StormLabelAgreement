@@ -70,6 +70,12 @@ Exp1$question <- factor(Exp1$question, levels=c("Buildings?","Damage?","Washover
 ggplot(Exp1,
        aes(VoteCount)) + geom_bar() + facet_wrap(~question)
 
+#look at counts of votes
+TableOfCounts <- Exp1 %>% 
+  group_by(question, VoteCount) %>% 
+  summarise(n = n())
+
+
 #################### Disagreement decay chart... not used
 
 #sequentially look at disagreement
