@@ -214,35 +214,31 @@ irrLVLS <- c('Buidings?', 'Damage?', 'Washover?', 'No Impact?',
 IRR12$Question <- factor(IRR12$Question,levels = rev(irrLVLS))
 IRR34$Question <- factor(IRR34$Question,levels = rev(irrLVLS))
 
-IRR34$Exp <- factor(IRR34$Exp,levels = c('Subset', 'Quadrants'))
+#blue is subset, red is Quads
+IRR34$Exp <- factor(IRR34$Exp,levels = c( 'Quadrants','Subset'))
 
+######### PLOT exp12
+PivotIRR12 <- IRR12 %>%
+  pivot_longer(cols = Krippendorf_alpha:`Percent Agreement`, 
+               names_to = "Statval", values_to = "Value")
 
-#Plot % agree and Krippendorf Alpha for  Exp1 and Exp2
-P1 <- ggplot(data=IRR12, aes(x=Question,y=IRR12$`Percent Agreement`,fill=factor(Exp, levels = c(2,1)))) +
-  geom_bar(position="dodge",stat="identity") +
-  labs(y="Percent Agreement",fill = "Experiment") + 
-  coord_flip()
+ggplot(data=PivotIRR12, aes(x=Question,y=Value,fill=factor(Exp, levels = c(2,1)))) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() + 
+  facet_grid(~Statval, scales = "free") +
+  labs(fill = "Experiment") + 
+  guides(fill = guide_legend(reverse = TRUE)) 
 
-P2 <- ggplot(data=IRR12, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp, levels = c(2,1)))) +
-  geom_bar(position="dodge",stat="identity") +
-  labs(y="Krippendorf's Alpha",fill = "Experiment") + 
-  coord_flip()
+######### PLOT exp34
 
-grid.arrange(P1, P2, nrow = 1)
+PivotIRR34 <- IRR34 %>%
+  pivot_longer(cols = Krippendorf_alpha:`Percent Agreement`, 
+               names_to = "Statval", values_to = "Value")
 
-#Plot % agree and Krippendorf Alpha for  Exp3 and Exp4
-P3 <- ggplot(data=IRR34, aes(x=Question,y=IRR34$`Percent Agreement`,fill=factor(Exp))) +
-  geom_bar(position="dodge",stat="identity") +
-  labs(y="Percent Agreement",fill = "Experiment") + 
-  coord_flip()
-
-P4 <- ggplot(data=IRR34, aes(x=Question,y=Krippendorf_alpha,fill=factor(Exp))) +
-  geom_bar(position="dodge",stat="identity") +
-  labs(y="Krippendorf's Alpha",fill = "Experiment") + 
-  coord_flip()
-
-grid.arrange(P3, P4, nrow = 1)
-
-
-
+ggplot(data=PivotIRR34, aes(x=Question,y=Value,fill=factor(Exp))) +
+  geom_bar(position="dodge",stat="identity") + 
+  coord_flip() + 
+  facet_grid(~Statval, scales = "free") +
+  labs(fill = "Experiment") + 
+  guides(fill = guide_legend(reverse = TRUE)) 
 

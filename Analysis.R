@@ -23,7 +23,7 @@ all_pivot_count <- all_pivot_count %>%
 ####### Question bar charts <- Figure 3
 
 # Isolate experiment 1
-Exp1All <- all_pivot_count %>%
+Exp1 <- all_pivot_count %>%
   filter(experimentCount == 1) %>%
   select("NOAA_flight":"7") %>%
   mutate(`1` = as.numeric(`1`),`2` = as.numeric(`2`),`3` = as.numeric(`3`),
@@ -43,8 +43,9 @@ Exp1 <- cbind(Exp1All,FullyCrossed) %>%
 #Counts for each
 Exp1$VoteCount <- rowSums(Exp1[,4:10])
 
-#replace label name
+#remove estuary, which was not tagged in exp 1, and replace label name
 Exp1 <- Exp1 %>%
+  filter(question != "estuary") %>%
   mutate(question = replace(question, question == "devType", "Buildings?")) %>%
   mutate(question = replace(question, question == "allWater", "All Water?")) %>%
   mutate(question = replace(question, question == "collision", "Collision?")) %>%
@@ -69,7 +70,7 @@ Exp1$question <- factor(Exp1$question, levels=c("Buildings?","Damage?","Washover
 ggplot(Exp1,
        aes(VoteCount)) + geom_bar() + facet_wrap(~question)
 
-#################### Disagreement decay chart Figure 6
+#################### Disagreement decay chart... not used
 
 #sequentially look at disagreement
 Exp1$add1 <- ifelse(Exp1$`1` == Exp1$`2`, 0, 1)
