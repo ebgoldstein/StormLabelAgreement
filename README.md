@@ -4,7 +4,8 @@ We solicited multiple labels for aerial images of US coastal environments after 
 
 To use the scripts in this repository requires data that is available from Zenodo:
 
- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4694325.svg)](https://doi.org/10.5281/zenodo.4694325)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4967050.svg)](https://doi.org/10.5281/zenodo.4967050)
+
 
 Note that the `Prepdata.R` script collects this data for you, and places it in a `/data` folder.
 
