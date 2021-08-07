@@ -1,6 +1,7 @@
 /old
 /data
-/subset
+/subsetQ
+/SubsetNCE
 /helpers
 
 .RData

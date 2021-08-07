@@ -137,8 +137,8 @@ PrepDataFn <- function(data_csv) {
 }
 
 
-#call the fn for exp1 and 2
-#import the data (eventually replace w/ Zenodo URL)
+#######Prep the data for exp1 and 2
+#import the data
 data <- read_csv("data/ReleaseData_v3.csv")
 
 all_pivot_exp12 <- PrepDataFn(data)
@@ -157,7 +157,7 @@ all_pivot_exp12_count <- cbind(all_pivot_exp12,experimentCount)
 write.csv(all_pivot_exp12_count,'data/all_pivot_count_exp12.csv')
 
 
-#Subset for Exp 3
+#######Prep the data for Exp 3
 
 subset <- read_csv("SubsetList.csv")
 
@@ -167,7 +167,7 @@ Exp3Subset <- all_pivot_exp12_count %>%
 #save the dataframe
 write.csv(Exp3Subset,'data/all_pivot_count_subset.csv')
 
-#call the fn for exp3 Quads
+#######Prep the data for exp3 Quads
 
 data <- read_csv("data/ReleaseDataQuads.csv")
 
@@ -175,3 +175,22 @@ all_pivot_quads <- PrepDataFn(data)
 
 #save the dataframe
 write.csv(all_pivot_quads,'data/all_pivot_count_quads.csv')
+
+#######Prep the data for Exp 4 subset (NCE)
+
+subsetNCE <- read_csv("SubsetListNCE.csv")
+
+Exp4Subset <- all_pivot_exp12_count %>%
+  filter(image %in% c(subsetNCE$image) )
+
+#save the dataframe
+write.csv(Exp4Subset,'data/all_pivot_count_subset_NCE.csv')
+
+#######Prep the data for Exp 4 subset (NCE), nonexpert
+
+data <- read_csv("data/ReleaseDataNCE.csv")
+
+all_pivot_NCE <- PrepDataFn(data)
+
+#save the dataframe
+write.csv(all_pivot_NCE,'data/all_pivot_count_NCE.csv')
