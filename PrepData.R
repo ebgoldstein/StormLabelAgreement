@@ -14,20 +14,26 @@ if (direxist == TRUE) {
   #If dir exists, check to see if files exist
   RDV3 <- file.exists("data/ReleaseData_v3.csv")
   RDQ <- file.exists("data/ReleaseDataQuads.csv")
+  RDNCE <- file.exists("data/ReleaseDataNCE.csv")
   if (RDV3 == FALSE){
     #If its not there, get it 
-    download.file("https://zenodo.org/record/4967050/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
+    download.file("https://zenodo.org/record/5172799/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
   }
   if (RDQ == FALSE) {
     #If its not there, get it 
-    download.file("https://zenodo.org/record/4967050/files/ReleaseDataQuads.csv", "data//ReleaseDataQuads.csv")
+    download.file("https://zenodo.org/record/5172799/files/ReleaseDataQuads.csv", "data/ReleaseDataQuads.csv")
+  }
+  if (RDNCE == FALSE) {
+    #If its not there, get it 
+    download.file("https://zenodo.org/record/5172799/files/ReleaseDataNCE.csv", "data/ReleaseDataNCE.csv")
   } 
   
 } else {
   #If dir does not exist, make it and put the files in.
   dir.create("data")
-  download.file("https://zenodo.org/record/4967050/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
-  download.file("https://zenodo.org/record/4967050/files/ReleaseDataQuads.csv", "data//ReleaseDataQuads.csv")
+  download.file("https://zenodo.org/record/5172799/files/ReleaseData_v3.csv", "data/ReleaseData_v3.csv")
+  download.file("https://zenodo.org/record/5172799/files/ReleaseDataQuads.csv", "data/ReleaseDataQuads.csv")
+  download.file("https://zenodo.org/record/5172799/files/ReleaseDataNCE.csv", "data/ReleaseDataNCE.csv")
 }
 
 

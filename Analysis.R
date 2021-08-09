@@ -77,44 +77,44 @@ TableOfCounts <- Exp1 %>%
 
 
 #################### Disagreement decay chart... not used
-
-#sequentially look at disagreement
-Exp1$add1 <- ifelse(Exp1$`1` == Exp1$`2`, 0, 1)
-Exp1$add2 <- ifelse(Exp1$`1` == Exp1$`2` &  
-                      Exp1$`2`== Exp1$`3`, 0, 1)
-Exp1$add3 <- ifelse(Exp1$`1` == Exp1$`2` &  
-                      Exp1$`2`== Exp1$`3` &  
-                      Exp1$`3`== Exp1$`4`, 0, 1)
-Exp1$add4 <- ifelse(Exp1$`1` == Exp1$`2` &  
-                      Exp1$`2`== Exp1$`3` &  
-                      Exp1$`3`== Exp1$`4` &  
-                      Exp1$`4`== Exp1$`5`, 0, 1)
-
-Exp1$add5 <- ifelse(Exp1$`1` == Exp1$`2` &  
-                      Exp1$`2`== Exp1$`3` &  
-                      Exp1$`3`== Exp1$`4` &  
-                      Exp1$`4`== Exp1$`5` &  
-                      Exp1$`5`== Exp1$`6`, 0, 1)
-
-Exp1$add6 <- ifelse(Exp1$`1` == Exp1$`2` &  
-                      Exp1$`2`== Exp1$`3` &  
-                      Exp1$`3`== Exp1$`4` &  
-                      Exp1$`4`== Exp1$`5` &  
-                      Exp1$`5`== Exp1$`6` &  
-                      Exp1$`6`== Exp1$`7`, 0, 1)
-
-
-#group by Q and flight, sum by column
-
-DISS <- Exp1 %>% 
-  group_by(NOAA_flight) %>%
-  group_by(question) %>%
-  summarise(across(add1:add6, sum)) %>%
-  pivot_longer(!question, names_to = "Added", values_to = "count")
-
-ggplot(DISS, aes(x = Added, y = count, color = question)) +
-  ylim(0, 300) +
-  geom_line(aes(group = question)) +
-  geom_point()
+# 
+# #sequentially look at disagreement
+# Exp1$add1 <- ifelse(Exp1$`1` == Exp1$`2`, 0, 1)
+# Exp1$add2 <- ifelse(Exp1$`1` == Exp1$`2` &  
+#                       Exp1$`2`== Exp1$`3`, 0, 1)
+# Exp1$add3 <- ifelse(Exp1$`1` == Exp1$`2` &  
+#                       Exp1$`2`== Exp1$`3` &  
+#                       Exp1$`3`== Exp1$`4`, 0, 1)
+# Exp1$add4 <- ifelse(Exp1$`1` == Exp1$`2` &  
+#                       Exp1$`2`== Exp1$`3` &  
+#                       Exp1$`3`== Exp1$`4` &  
+#                       Exp1$`4`== Exp1$`5`, 0, 1)
+# 
+# Exp1$add5 <- ifelse(Exp1$`1` == Exp1$`2` &  
+#                       Exp1$`2`== Exp1$`3` &  
+#                       Exp1$`3`== Exp1$`4` &  
+#                       Exp1$`4`== Exp1$`5` &  
+#                       Exp1$`5`== Exp1$`6`, 0, 1)
+# 
+# Exp1$add6 <- ifelse(Exp1$`1` == Exp1$`2` &  
+#                       Exp1$`2`== Exp1$`3` &  
+#                       Exp1$`3`== Exp1$`4` &  
+#                       Exp1$`4`== Exp1$`5` &  
+#                       Exp1$`5`== Exp1$`6` &  
+#                       Exp1$`6`== Exp1$`7`, 0, 1)
+# 
+# 
+# #group by Q and flight, sum by column
+# 
+# DISS <- Exp1 %>% 
+#   group_by(NOAA_flight) %>%
+#   group_by(question) %>%
+#   summarise(across(add1:add6, sum)) %>%
+#   pivot_longer(!question, names_to = "Added", values_to = "count")
+# 
+# ggplot(DISS, aes(x = Added, y = count, color = question)) +
+#   ylim(0, 300) +
+#   geom_line(aes(group = question)) +
+#   geom_point()
 
 

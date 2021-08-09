@@ -18,7 +18,7 @@ ImageIRR <- function(data,maxLabeler) {
   
   #make a dataframe to hold the results
   IRR_results <- data.frame(matrix(ncol = 4, nrow = (nrow(data)/All_Images)))
-  colnames(IRR_results) <- c("Question", "Krippendorf_alpha", "Percent Agreement", "Percent w/ atleast 1 Yes")
+  colnames(IRR_results) <- c("Question", "Krippendorff's alpha", "Percent Agreement", "Percent w/ atleast 1 Yes")
   
   #Loop through data, each category at a time. Record the question, and calculcate IRR stat.
   #Then add output to a new table
@@ -261,8 +261,8 @@ IRR44 <- IRR44 %>%
 IRR44$Exp <- as.character(IRR44$Exp)
 
 IRR44  <- IRR44 %>%
-  mutate(Exp = replace(Exp, Exp == 'ce', 'Coastal')) %>%
-  mutate(Exp = replace(Exp, Exp == 'nce', 'NonCoastal')) 
+  mutate(Exp = replace(Exp, Exp == 'ce', 'Expert')) %>%
+  mutate(Exp = replace(Exp, Exp == 'nce', 'Non Expert')) 
 
 # set the Q order via levels.
 irrLVLS <- c('Buidings?', 'Damage?', 'Washover?', 'No Impact?', 
@@ -282,7 +282,7 @@ IRR33$Exp <- factor(IRR33$Exp,levels = c( 'Quadrants','Subset'))
 
 ######### PLOT exp12
 PivotIRR12 <- IRR12 %>%
-  pivot_longer(cols = Krippendorf_alpha:`Percent Agreement`, 
+  pivot_longer(cols = `Krippendorff's alpha`:`Percent Agreement`, 
                names_to = "Statval", values_to = "Value")
 
 ggplot(data=PivotIRR12, aes(x=Question,y=Value,fill=factor(Exp, levels = c(2,1)))) +
@@ -295,7 +295,7 @@ ggplot(data=PivotIRR12, aes(x=Question,y=Value,fill=factor(Exp, levels = c(2,1))
 ######### PLOT exp3
 
 PivotIRR33 <- IRR33 %>%
-  pivot_longer(cols = Krippendorf_alpha:`Percent Agreement`, 
+  pivot_longer(cols = `Krippendorff's alpha`:`Percent Agreement`, 
                names_to = "Statval", values_to = "Value")
 
 ggplot(data=PivotIRR33, aes(x=Question,y=Value,fill=factor(Exp))) +
@@ -308,7 +308,7 @@ ggplot(data=PivotIRR33, aes(x=Question,y=Value,fill=factor(Exp))) +
 ######### PLOT exp4
 
 PivotIRR44 <- IRR44 %>%
-  pivot_longer(cols = Krippendorf_alpha:`Percent Agreement`, 
+  pivot_longer(cols = `Krippendorff's alpha`:`Percent Agreement`, 
                names_to = "Statval", values_to = "Value")
 
 ggplot(data=PivotIRR44, aes(x=Question,y=Value,fill=factor(Exp))) +
