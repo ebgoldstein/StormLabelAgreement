@@ -4,16 +4,18 @@ We solicited multiple labels for aerial images of US coastal environments after 
 
 To use the scripts in this repository requires data that is available from Zenodo:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4967050.svg)](https://doi.org/10.5281/zenodo.4967050)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5172799.svg)](https://doi.org/10.5281/zenodo.5172799)
 
 
 Note that the `Prepdata.R` script collects this data for you, and places it in a `/data` folder.
 
-There are 3 scripts here to use on the release data:
+There are three scripts here to use on the release data:
 
 - `Prepdata.R`, must be run first. This script loads the data and pivots it into the needed format.
 - `IRRcalcKA.R`, which calculates the IRR stat (Krippendorf's alpha) for each category.
 - `Analysis.R`, which makes some plots.
+
+Four libraries are needed: irr, tidyverse, stringr, gridExtra.
 
 To see details about the larger project, look here at our previous paper: "An Active Learning Pipeline to Detect Hurricane Washover in Post-Storm Aerial Images": [![Earth ArXiv Preprint
 DOI](https://img.shields.io/badge/%F0%9F%8C%8D%F0%9F%8C%8F%F0%9F%8C%8E%20EarthArXiv-doi.org%2F10.31223%2FX5JW23-%23FF7F2A)](https://doi.org/10.31223/X5JW23)
