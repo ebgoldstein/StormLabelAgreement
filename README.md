@@ -1,5 +1,7 @@
 ## Analysis of inter-rater agreement for labels of post-storm coastal images
 
+Code for Goldstein et al., 2021 — https://doi.org/10.1029/2021EA001896
+
 We solicited multiple labels for aerial images of US coastal environments after three hurricanes ( Florence, Michael, Isaias) to learn more about the labeling process for earth and environmental science imagery images. We ask a range of questions about storm impacts, and each image is labeled between two and seven times by a group of 22 coastal scientists. The multiple-choice questions vary between two and four possible answers, and some questions allow for multiple answers. The corpus of images are from the large repository of Emergency Response Imagery collected by the National Geodetic Survey Remote Sensing Division of the US National Oceanographic and Atmospheric Administration. From all the labels, we computed inter-rater reliability.
 
 To use the scripts in this repository requires data that is available from Zenodo:
