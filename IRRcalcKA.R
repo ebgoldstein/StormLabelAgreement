@@ -187,10 +187,14 @@ IRR_results3s[14,1] <- 'inland'
 #there was no estuary category in Exp 1, but that means the IRR score is 1...not correct.
 IRR_results1[14,2] <- NA
 
-#non experty swash was slightly negative (worse than chance)... round to 0
+#non experty swash was slightly negative (worse than chance)... 
 IRR_resultsNCE[4,2] <- NA
 
-# no rivers in Exp3s, 3q, 4, so instead of KA ==1, they should be NA
+# no rivers in Exp 2 so instead of KA ==1 nad PA ~=0, they should be NA
+IRR_results2[11,2] <- NA
+IRR_results2[11,3] <- NA
+
+# no rivers in Exp 2, Exp3s, 3q, 4, so instead of KA ==1, they should be NA
 IRR_results3s[11,2] <- NA
 IRR_results3q[11,2] <- NA
 IRR_resultsCE[11,2] <- NA
